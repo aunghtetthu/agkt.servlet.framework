@@ -3,6 +3,7 @@
 	<name>TestProject</name>
 	<comment></comment>
 	<projects>
+		<project>com.aungkhant.servlet</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
