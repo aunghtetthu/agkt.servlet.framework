@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aungkhant.controller.AbstractServlet;
+import com.aungkhant.model.EntityManager;
 
 
 @WebServlet("/tes")
@@ -14,6 +15,9 @@ public class TestFrameWork extends AbstractServlet{
 	public void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
 		try{
+			EntityManager<People> entityManager = (EntityManager<People>) getEntityManager();
+			People p = new People()
+;			entityManager.createTable(p);
 		this.showView(request, response);
 		
 		}catch(Exception e){

@@ -1,6 +1,7 @@
 package com.aungkhant.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -10,12 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.aungkhant.model.ConnectionParameter;
+import com.aungkhant.model.EntityManager;
 
 public abstract class AbstractServlet extends HttpServlet {
 	/**
@@ -36,7 +41,42 @@ public abstract class AbstractServlet extends HttpServlet {
 	private boolean isInConditionStatus;
 	private Boolean conditionValue;
 	private String lastAddedKey;
+	private static EntityManager<?> entityManager;
+	private ConnectionParameter connectionParameter;
+	
+	
+	
+	public ConnectionParameter getConnectionParameter() {
+		return connectionParameter;
+	}
 
+	public void setConnectionParameter(ConnectionParameter connectionParameter) {
+		this.connectionParameter = connectionParameter;
+	}
+
+	protected <T> EntityManager<?> getEntityManager() throws Exception {
+		if(entityManager == null) {
+			entityManager = new EntityManager<T>();
+			if(this.connectionParameter==null) {
+				String fileName = "/connection.ak";
+				ServletContext context = getServletContext();
+				InputStream is = context.getResourceAsStream(fileName);
+				Properties prop = new Properties();
+				prop.load(is);
+				
+				ConnectionParameter connectionParameter = new ConnectionParameter();
+				connectionParameter.setDataBase(prop.getProperty("dataBase"));
+				connectionParameter.setDriver(prop.getProperty("driver"));
+				connectionParameter.setPassword(prop.getProperty("password"));
+				connectionParameter.setUrl(prop.getProperty("url"));
+				connectionParameter.setUserName(prop.getProperty("userName"));
+				this.connectionParameter = connectionParameter;
+			}
+			entityManager.setConnectionParameter(connectionParameter);
+		}
+		return entityManager;
+	}
+	
 	protected void setHeader(String filePath) {
 		headerFilePath = filePath;
 	}

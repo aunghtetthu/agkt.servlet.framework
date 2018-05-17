@@ -1,10 +1,29 @@
 package com.ak.test;
 
+import com.aungkhant.model.Column;
+import com.aungkhant.model.Id;
+import com.aungkhant.model.Table;
+
+@Table("people")
 public class People {
+	
+	@Id("people_id")
+	private int id;
+	
+	@Column("name")
 	private String name;
+	
+	@Column("age")
 	private int age;
+	
+	@Column("address")
 	private String address;
+	
+	@Column("staff")
 	private Boolean staff;
+	
+	
+	
 	public String getName() {
 		return name;
 	}
