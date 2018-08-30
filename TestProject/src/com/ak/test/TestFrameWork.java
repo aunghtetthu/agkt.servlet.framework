@@ -16,8 +16,16 @@ public class TestFrameWork extends AbstractServlet{
 			HttpServletResponse response) {
 		try{
 			EntityManager<People> entityManager = (EntityManager<People>) getEntityManager();
-			People p = new People()
-;			entityManager.createTable(p);
+			People p = new People();
+			p.setId(2);
+			p.setName("hello");
+
+			People p2 = entityManager.findById(p);
+			System.out.println(p2.getId());
+			System.out.println(p2.getName());
+			System.out.println(p2.getAge());
+			System.out.println(p2.getStaff());
+			
 		this.showView(request, response);
 		
 		}catch(Exception e){
