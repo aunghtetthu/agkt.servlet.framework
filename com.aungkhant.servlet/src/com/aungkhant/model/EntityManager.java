@@ -315,12 +315,6 @@ public class EntityManager<T> {
 					}
 					else if(field.getType().isAssignableFrom(Boolean.class) || field.getType().isAssignableFrom(boolean.class)){
 						field.set(t, rs.getBoolean(columnName));
-//						if(value==null || value.equals(false)){
-//							queryString  = columnName+"="+0;
-//						}
-//						else{
-//							queryString  = columnName+"="+1;
-//						}
 					}
 				
 				}

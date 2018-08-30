@@ -1,5 +1,7 @@
 package com.ak.test;
 
+import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +22,13 @@ public class TestFrameWork extends AbstractServlet{
 			p.setId(2);
 			p.setName("hello");
 
-			People p2 = entityManager.findById(p);
+			List<People> peopleList = entityManager.getList(People.class);
+			for(People p2: peopleList){
 			System.out.println(p2.getId());
 			System.out.println(p2.getName());
 			System.out.println(p2.getAge());
 			System.out.println(p2.getStaff());
-			
+			}
 		this.showView(request, response);
 		
 		}catch(Exception e){
